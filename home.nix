@@ -138,6 +138,24 @@
     enableZshIntegration = true;
   };
 
+  programs.git = {
+    enable = true;
+    userEmail = "sunilgunisetty@gmail.com";
+    userName = "Sunil Gunisetty";
+
+    ignores = [
+      ".DS_Store"
+    ];
+
+    aliases = {
+      st = "status";
+      ci = "commit";
+      lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --";
+      co = "checkout";
+      cane = "commit --amend --no-edit";
+    };
+  };
+
   home.file = {
     ".emacs.d" = {
       source = ./dotfiles/emacs;
