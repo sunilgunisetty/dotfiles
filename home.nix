@@ -154,6 +154,14 @@
       co = "checkout";
       cane = "commit --amend --no-edit";
     };
+    extraConfig = {
+      core = {
+        whitespace = "trailing-space,space-before-tab";
+      };
+      pull = {
+        ff = "only";
+      };
+    };
   };
 
   home.file = {
