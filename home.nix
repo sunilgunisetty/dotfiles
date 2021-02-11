@@ -153,6 +153,7 @@
       lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --";
       co = "checkout";
       cane = "commit --amend --no-edit";
+      dc = "diff --cached";
     };
     extraConfig = {
       core = {
@@ -190,5 +191,7 @@
     EDITOR="emacs -nw";
     TERMINAL = "zsh";
     FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border";
+    GOPATH="$HOME/go";
+    PATH="$PATH:$GOPATH/bin";
   };
 }
