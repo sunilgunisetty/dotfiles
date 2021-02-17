@@ -152,6 +152,10 @@
       package = pkgs.fira-code;
       name = "Fira Code Retina";
     };
+    keybindings = {
+      "cmd+right" = "next_tab";
+      "cmd+left" = "previous_tab";
+    };
     extraConfig = ''
       # Theme from https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Monokai_Soda.conf
       background           #191919
