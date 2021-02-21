@@ -54,7 +54,6 @@
         git-link
         forge
         ag
-        doom-themes
         use-package
         all-the-icons
         which-key
@@ -89,6 +88,7 @@
         yaml-mode
         terraform-mode
         speed-type
+        ample-theme
       ]));
   };
 

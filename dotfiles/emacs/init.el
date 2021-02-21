@@ -123,11 +123,15 @@
 ;; ########################################################################
 
 ;; ########### THEME ####################
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (load-theme 'doom-monokai-pro t))
-
+(use-package ample-theme
+  :init
+  (progn
+    (load-theme 'ample t t)
+    (load-theme 'ample-flat t t)
+    (load-theme 'ample-light t t)
+    (enable-theme 'ample))
+  :defer t
+  :ensure t)
 
 ;; ############### MAGIT #################
 (use-package magit
