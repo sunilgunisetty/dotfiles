@@ -157,30 +157,49 @@
       "cmd+left" = "previous_tab";
     };
     extraConfig = ''
-      # Theme from https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/Monokai_Soda.conf
-      background           #191919
-      foreground           #c4c4b5
-      #cursor               #f6f6ec
-      # Green cursor color
-      cursor               #15b61a
-      selection_background #343434
-      color0               #191919
-      color8               #615e4b
-      color1               #f3005f
-      color9               #f3005f
-      color2               #97e023
-      color10              #97e023
-      color3               #fa8419
-      color11              #dfd561
-      color4               #9c64fe
-      color12              #9c64fe
-      color5               #f3005f
-      color13              #f3005f
-      color6               #57d1ea
-      color14              #57d1ea
-      color7               #c4c4b5
-      color15              #f6f6ee
-      selection_foreground #191919
+      # Base16 Tomorrow Night - kitty color config
+      # Scheme by Chris Kempson (http://chriskempson.com)
+      background #1d1f21
+      foreground #c5c8c6
+      selection_background #c5c8c6
+      selection_foreground #1d1f21
+      url_color #b4b7b4
+      cursor #c5c8c6
+      active_border_color #969896
+      inactive_border_color #282a2e
+      active_tab_background #1d1f21
+      active_tab_foreground #c5c8c6
+      inactive_tab_background #282a2e
+      inactive_tab_foreground #b4b7b4
+      tab_bar_background #282a2e
+
+      # normal
+      color0 #1d1f21
+      color1 #cc6666
+      color2 #b5bd68
+      color3 #f0c674
+      color4 #81a2be
+      color5 #b294bb
+      color6 #8abeb7
+      color7 #c5c8c6
+
+      # bright
+      color8 #969896
+      color9 #cc6666
+      color10 #b5bd68
+      color11 #f0c674
+      color12 #81a2be
+      color13 #b294bb
+      color14 #8abeb7
+      color15 #ffffff
+
+      # extended base16 colors
+      color16 #de935f
+      color17 #a3685a
+      color18 #282a2e
+      color19 #373b41
+      color20 #b4b7b4
+      color21 #e0e0e0
     '';
   };
 
