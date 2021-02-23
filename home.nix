@@ -167,11 +167,14 @@
       cursor #c5c8c6
       active_border_color #969896
       inactive_border_color #282a2e
-      active_tab_background #1d1f21
-      active_tab_foreground #c5c8c6
-      inactive_tab_background #282a2e
-      inactive_tab_foreground #b4b7b4
       tab_bar_background #282a2e
+
+      active_tab_foreground   #282c34
+      active_tab_background   #abb2bf
+      active_tab_font_style   bold
+      inactive_tab_foreground #5c6370
+      inactive_tab_background #22262d
+      inactive_tab_font_style normal
 
       # normal
       color0 #1d1f21
