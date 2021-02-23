@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  kube_prompt = builtins.fetchGit {url = "https://github.com/jonmosco/kube-ps1.git";};
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -130,6 +132,15 @@
       if [ -e ~/.env ]; then
          source ~/.env
       fi
+
+      # Kube Prompt from https://github.com/jonmosco/kube-ps1
+      if [ -e ${kube_prompt}/kube-ps1.sh ]; then
+         source ${kube_prompt}/kube-ps1.sh
+      fi
+    '';
+    initExtra = ''
+      # Have to put this at the end of file to make other function available in the environment
+      PROMPT='$(kube_ps1)'$PROMPT
     '';
   };
 
