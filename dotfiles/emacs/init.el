@@ -129,7 +129,7 @@
     (load-theme 'ample t t)
     (load-theme 'ample-flat t t)
     (load-theme 'ample-light t t)
-    (enable-theme 'ample))
+    (enable-theme 'ample-flat))
   :defer t
   :ensure t)
 
@@ -335,14 +335,17 @@
   (setq org-log-into-drawer t)
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE")
-          ;(sequence "BACKLOG" "PLAN" "ACTIVE" "REVIEW" "HOLD" "INCOMPLETE" "|" "COMPLETED" "CANCLED")
-          ))
-  (setq org-agenda-files '(((expand-file-name "dev/sunil/svg-orgfiles/tasks.org"))
-                           ((expand-file-name "dev/sunil/svg-orgfiles/journal.org"))))
+          (sequence "BACKLOG" "PLAN" "ACTIVE" "REVIEW" "HOLD" "INCOMPLETE" "|" "COMPLETED" "CANCLED")))
+  (setq org-agenda-files
+        '("~/dev/sunil/svg-orgfiles/tasks.org"
+          "~/dev/sunil/svg-orgfiles/journal.org"
+          "~/dev/sunil/svg-orgfiles/logbook.org"))
   (setq org-capture-templates
         `(("t" "Tasks / Projects")
-          ("tt" "Task" entry (file+olp (expand-file-name "dev/sunil/svg-orgfiles/tasks.org") "Tasks")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
+          ("tt" "Task" entry (file+olp "~/dev/sunil/svg-orgfiles/tasks.org" "Tasks")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("tp" "Project" entry (file+olp "~/dev/sunil/svg-orgfiles/tasks.org" "Projects")
+           "* PLAN %?\n  %U\n  %a\n  %i" :empty-lines 1)))
   (setq org-modules '(org-habit)))
 
 (use-package org-bullets
