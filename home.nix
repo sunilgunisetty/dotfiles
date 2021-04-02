@@ -158,8 +158,8 @@ in
     enable = true;
     settings = {
       font_size = "13";
-      disable_ligature = "never";
-      cursor_shape = "beam";
+      disable_ligatures = "never";
+      cursor_shape = "block";
       tab_bar_style = "separator";
       macos_titlebar_color = "system";
       macos_option_as_alt = "yes";
@@ -173,52 +173,49 @@ in
       "cmd+left" = "previous_tab";
     };
     extraConfig = ''
-      # Base16 Tomorrow Night - kitty color config
-      # Scheme by Chris Kempson (http://chriskempson.com)
-      background #1d1f21
-      foreground #c5c8c6
-      selection_background #c5c8c6
-      selection_foreground #1d1f21
-      url_color #b4b7b4
-      cursor #c5c8c6
-      active_border_color #969896
-      inactive_border_color #282a2e
-      tab_bar_background #282a2e
-
-      active_tab_foreground   #282c34
-      active_tab_background   #abb2bf
-      active_tab_font_style   bold
-      inactive_tab_foreground #5c6370
-      inactive_tab_background #22262d
-      inactive_tab_font_style normal
+      # Base16 3024 - kitty color config
+      # Scheme by Jan T. Sott (http://github.com/idleberg)
+      background #090300
+      foreground #a5a2a2
+      selection_background #a5a2a2
+      selection_foreground #090300
+      url_color #807d7c
+      cursor #a5a2a2
+      active_border_color #5c5855
+      inactive_border_color #3a3432
+      active_tab_background #991229
+      active_tab_foreground #807d7c
+      inactive_tab_background #3a3432
+      inactive_tab_foreground #807d7c
+      tab_bar_background #3a3432
 
       # normal
-      color0 #1d1f21
-      color1 #cc6666
-      color2 #b5bd68
-      color3 #f0c674
-      color4 #81a2be
-      color5 #b294bb
-      color6 #8abeb7
-      color7 #c5c8c6
+      color0 #090300
+      color1 #db2d20
+      color2 #01a252
+      color3 #fded02
+      color4 #01a0e4
+      color5 #a16a94
+      color6 #b5e4f4
+      color7 #a5a2a2
 
       # bright
-      color8 #969896
-      color9 #cc6666
-      color10 #b5bd68
-      color11 #f0c674
-      color12 #81a2be
-      color13 #b294bb
-      color14 #8abeb7
-      color15 #ffffff
+      color8 #5c5855
+      color9 #db2d20
+      color10 #01a252
+      color11 #fded02
+      color12 #01a0e4
+      color13 #a16a94
+      color14 #b5e4f4
+      color15 #f7f7f7
 
       # extended base16 colors
-      color16 #de935f
-      color17 #a3685a
-      color18 #282a2e
-      color19 #373b41
-      color20 #b4b7b4
-      color21 #e0e0e0
+      color16 #e8bbd0
+      color17 #cdab53
+      color18 #3a3432
+      color19 #4a4543
+      color20 #807d7c
+      color21 #d6d5d4
     '';
   };
 
