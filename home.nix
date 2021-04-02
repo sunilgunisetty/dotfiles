@@ -265,6 +265,15 @@ in
         fi
       '';
     };
+    ".aws/config" = {
+      text = ''
+        [default]
+        region=us-west-2
+        output=json
+        cli_auto_prompt = on-partial
+        cli_pager=
+      '';
+    };
   };
 
   home.sessionVariables = {
