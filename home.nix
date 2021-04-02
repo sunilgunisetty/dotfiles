@@ -43,6 +43,11 @@ in
     rustup
     ghc
     stack
+    clojure
+    telnet
+    coreutils
+    erlang
+    elixir
   ];
 
   programs.emacs = {
