@@ -13,6 +13,8 @@
 (scroll-bar-mode -1)
 (blink-cursor-mode 0)
 (show-paren-mode t)
+(setq show-paren-style 'parenthesis)
+(setq show-paren-when-point-inside-paren 1)
 (column-number-mode t)
 
 ;; scrolling
@@ -78,8 +80,10 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
 (when (display-graphic-p)
-  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+  (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+  (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -99,6 +103,8 @@
 ;; ################## DISPLAY ################################
 
 (global-hl-line-mode t)
+
+(delete-selection-mode t)
 
 (when (version<= "26.0.50" emacs-version )
   (global-display-line-numbers-mode))
@@ -129,7 +135,7 @@
     (load-theme 'ample t t)
     (load-theme 'ample-flat t t)
     (load-theme 'ample-light t t)
-    (enable-theme 'ample-flat))
+    (enable-theme 'ample))
   :defer t
   :ensure t)
 
@@ -286,7 +292,8 @@
   (put-clojure-indent 'or-join 1)
   (put-clojure-indent 'match 1)
   (put-clojure-indent 'search 1)
-  (put-clojure-indent 'scan 1))
+  (put-clojure-indent 'scan 1)
+  (require 'flycheck-clj-kondo))
 
 (use-package cider
   :ensure t
@@ -339,7 +346,8 @@
   (setq org-agenda-files
         '("~/dev/sunil/svg-orgfiles/tasks.org"
           "~/dev/sunil/svg-orgfiles/journal.org"
-          "~/dev/sunil/svg-orgfiles/logbook.org"))
+          "~/dev/sunil/svg-orgfiles/logbook.org"
+          "~/dev/sunil/svg-orgfiles/personal-and-home.org"))
   (setq org-capture-templates
         `(("t" "Tasks / Projects")
           ("tt" "Task" entry (file+olp "~/dev/sunil/svg-orgfiles/tasks.org" "Tasks")
@@ -361,31 +369,6 @@
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode))
-
-(use-package prettier-js
-  :ensure t
-  :config
-  (setq prettier-js-args
-        '("--trailing-comma" "es5"
-          "--single-quote" "true"
-          "--print-width" "120"
-          "--tab-width" "4"
-          "--use-tabs" "false"
-          "--jsx-bracket-same-line" "false"
-          "--stylelint-integration" "true")))
-
-(use-package js2-mode
-  :ensure t)
-
-(use-package rjsx-mode
-  :ensure t
-  :mode(("\\.js\\'" . rjsx-mode)
-        ("\\.jsx\\'" . rjsx-mode))
-  :init
-  (add-hook 'rjsx-mode-hook 'prettier-js-mode))
-
-(use-package json-mode
-  :ensure t)
 
 (use-package kubernetes
   :ensure t
@@ -409,3 +392,44 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
   (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
+
+
+;; Javascript and Typescript
+
+;; json-mode
+(use-package json-mode
+  :ensure t)
+
+(use-package rjsx-mode
+  :ensure t
+  :mode "\\.js\\'")
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package tide
+  :ensure t
+  :after (rjsx-mode company flycheck)
+  :hook (rjsx-mode . setup-tide-mode))
+
+(use-package prettier-js
+  :ensure t
+  :after (rjsx-mode)
+  :hook (rjsx-mode . prettier-js-mode))
+
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'flycheck-mode)
+  ;; OR for flymake support:
+  (add-hook 'haskell-mode-hook 'flymake-mode)
+  (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
+  (add-hook 'haskell-mode-hook 'dante-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode))

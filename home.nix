@@ -35,6 +35,9 @@ in
     terraform_0_13
     ag
     nodejs
+    nodePackages.typescript
+    nodePackages.prettier
+    nodePackages.typescript-language-server
     fd
     git
     (python39.withPackages (ps: with ps; [ pip ]))
@@ -86,16 +89,18 @@ in
         org-bullets
         wgrep-ag
         doom-modeline
-        prettier-js
-        js2-mode
-        rjsx-mode
-        json-mode
         kubernetes
         markdown-mode
         yaml-mode
         terraform-mode
         speed-type
         ample-theme
+        prettier-js
+        json-mode
+        rjsx-mode
+        tide
+        haskell-mode
+        dante
       ]));
   };
 
@@ -124,6 +129,7 @@ in
       cat = "bat";
       grep = "grep --color=auto";
       zrc = "bat ~/.zshrc";
+      sshadd = "ssh-add ~/.ssh/svg_rsa";
     };
     initExtraFirst = ''
       if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -157,7 +163,7 @@ in
   programs.kitty = {
     enable = true;
     settings = {
-      font_size = "13";
+      font_size = "14";
       disable_ligatures = "never";
       cursor_shape = "block";
       tab_bar_style = "separator";
