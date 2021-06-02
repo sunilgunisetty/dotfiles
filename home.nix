@@ -101,6 +101,7 @@ in
         tide
         haskell-mode
         dante
+        humanoid-themes
       ]));
   };
 

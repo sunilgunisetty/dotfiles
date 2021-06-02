@@ -102,7 +102,6 @@
 ;; ############################################################
 ;; ################## DISPLAY ################################
 
-(global-hl-line-mode t)
 
 (delete-selection-mode t)
 
@@ -112,9 +111,6 @@
 (global-visual-line-mode 1)
 (setq visual-line-fringe-indicators '(left-curly-arrow right-curly-arrow))
 (setq set-fringe-mode '(5 . 0))
-
-(setq vj/font-name "Hack")
-(defcustom vj/font-size 11 "My default font size")
 
 (use-package which-key
   :init (which-key-mode))
@@ -129,15 +125,23 @@
 ;; ########################################################################
 
 ;; ########### THEME ####################
-(use-package ample-theme
+;; (use-package ample-theme
+;;   :init
+;;   (progn
+;;     (load-theme 'ample t t)
+;;     (load-theme 'ample-flat t t)
+;;     (load-theme 'ample-light t t)
+;;     (enable-theme 'ample))
+;;   :defer t
+;;   :ensure t)
+
+(use-package humanoid-themes
+  :ensure t
   :init
   (progn
-    (load-theme 'ample t t)
-    (load-theme 'ample-flat t t)
-    (load-theme 'ample-light t t)
-    (enable-theme 'ample))
-  :defer t
-  :ensure t)
+    (load-theme 'humanoid-light t t)
+    (load-theme 'humanoid-dark t t)
+    (enable-theme 'humanoid-dark)))
 
 ;; ############### MAGIT #################
 (use-package magit
