@@ -211,14 +211,8 @@
 (use-package multiple-cursors
   :init
   (progn
-    (defvar multiple-cursors-keymap nil "Multiple Cursor")
-    (setq multiple-cursors-keymap (make-sparse-keymap))
-    (global-set-key (kbd "C-x M-e") multiple-cursors-keymap)
-    (define-key multiple-cursors-keymap (kbd "e") 'mc/edit-lines)
-    (define-key multiple-cursors-keymap (kbd "n") 'mc/mark-next-like-this)
-    (define-key multiple-cursors-keymap (kbd "p") 'mc/mark-previous-like-this)
-    (define-key multiple-cursors-keymap (kbd "a") 'mc/mark-all-like-this)
-    (define-key multiple-cursors-keymap (kbd ".") 'mc/mark-more-like-this-extended)))
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)))
 
 (global-set-key (kbd "C-x ;") 'set-rectangular-region-anchor)
 (global-set-key (kbd "M-D") 'kill-whole-line)
