@@ -67,7 +67,6 @@ in
         use-package
         all-the-icons
         which-key
-        all-the-icons
         highlight-indent-guides
         projectile
         counsel-projectile
@@ -99,9 +98,11 @@ in
         json-mode
         rjsx-mode
         tide
+        web-mode
         haskell-mode
         dante
         humanoid-themes
+        spacegray-theme
       ]));
   };
 

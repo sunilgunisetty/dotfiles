@@ -115,7 +115,8 @@
 (use-package which-key
   :init (which-key-mode))
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
 
 (use-package highlight-indent-guides
   :init
@@ -125,23 +126,31 @@
 ;; ########################################################################
 
 ;; ########### THEME ####################
-;; (use-package ample-theme
+(use-package ample-theme
+  :init
+  (progn
+    (load-theme 'ample t t)
+    (load-theme 'ample-flat t t)
+    (load-theme 'ample-light t t))
+  :ensure t)
+
+;; (use-package humanoid-themes
+;;   :ensure t
 ;;   :init
 ;;   (progn
-;;     (load-theme 'ample t t)
-;;     (load-theme 'ample-flat t t)
-;;     (load-theme 'ample-light t t)
-;;     (enable-theme 'ample))
-;;   :defer t
-;;   :ensure t)
+;;     (load-theme 'humanoid-light t t)
+;;     (load-theme 'humanoid-dark t t)
+;;     (enable-theme 'humanoid-dark)))
 
-(use-package humanoid-themes
+(use-package spacegray-theme
   :ensure t
   :init
   (progn
-    (load-theme 'humanoid-light t t)
-    (load-theme 'humanoid-dark t t)
-    (enable-theme 'humanoid-dark)))
+    (load-theme 'spacegray t t)))
+
+(if (display-graphic-p)
+    (enable-theme 'spacegray)
+  (enable-theme 'ample))
 
 ;; ############### MAGIT #################
 (use-package magit
@@ -196,7 +205,8 @@
   (use-package flx))
 
 (use-package all-the-icons-ivy
-  :init (all-the-icons-ivy-setup))
+  :init (all-the-icons-ivy-setup)
+  :ensure t)
 
 (use-package swiper
   :bind (("C-s" . swiper)
@@ -366,6 +376,7 @@
   :after ag)
 
 (use-package doom-modeline
+  :ensure t
   :hook (after-init . doom-modeline-mode))
 
 (use-package kubernetes
@@ -391,35 +402,7 @@
   (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
   (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 
-
-;; Javascript and Typescript
-
-;; json-mode
-(use-package json-mode
-  :ensure t)
-
-(use-package rjsx-mode
-  :ensure t
-  :mode "\\.js\\'")
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (tide-hl-identifier-mode +1)
-  (company-mode +1))
-
-(use-package tide
-  :ensure t
-  :after (rjsx-mode company flycheck)
-  :hook (rjsx-mode . setup-tide-mode))
-
-(use-package prettier-js
-  :ensure t
-  :after (rjsx-mode)
-  :hook (rjsx-mode . prettier-js-mode))
-
+;; Haskell mode
 (use-package dante
   :ensure t
   :after haskell-mode
@@ -431,3 +414,81 @@
   (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
   (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (if (file-exists-p (concat tide-project-root "node_modules/typescript/bin/tsserver"))
+    (setq tide-tsserver-executable "node_modules/typescript/bin/tsserver")
+    (setq tide-tsserver-executable "/Users/sgunisetty/.nix-profile/bin/tsserver"))
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (local-set-key (kbd "C-c d") 'tide-documentation-at-point)
+  (company-mode +1))
+
+;; typescript setup
+(use-package tide
+  :ensure t
+  :config
+  (progn
+    (company-mode +1)
+    ;; aligns annotation to the right hand side
+    (setq company-tooltip-align-annotations t)
+    (add-hook 'typescript-mode-hook #'setup-tide-mode)
+    (add-hook 'before-save-hook 'tide-format-before-save)
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+  ))
+
+;; use web-mode + tide-mode for javascript instead
+(use-package js2-mode
+  :ensure t
+  :config
+  (progn
+    (add-hook 'js2-mode-hook #'setup-tide-mode)
+    ;; configure javascript-tide checker to run after your default javascript checker
+    (setq js2-basic-offset 2)
+    (flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+    (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
+
+;; use json-mode from https://github.com/joshwnj/json-mode for json instead of js-mode or js2-mode
+(use-package json-mode
+  :ensure t
+  :config
+  (progn
+    (flycheck-add-mode 'json-jsonlint 'json-mode)
+    (add-hook 'json-mode-hook 'flycheck-mode)
+    (setq js-indent-level 2)
+    (add-to-list 'auto-mode-alist '("\\.json" . json-mode))))
+
+(use-package web-mode
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.js" . web-mode))
+    ;; this magic incantation fixes highlighting of jsx syntax in .js files
+    (setq web-mode-content-types-alist
+          '(("jsx" . "\\.js[x]?\\'")))
+    (add-hook 'web-mode-hook
+              (lambda ()
+                (setq web-mode-code-indent-offset 2)
+                (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))
+                (when (string-equal "jsx" (file-name-extension buffer-file-name))
+                  (setup-tide-mode))
+                (when (string-equal "js" (file-name-extension buffer-file-name))
+                  (progn
+                    (setup-tide-mode)
+                    (with-eval-after-load 'flycheck
+                      (flycheck-add-mode 'typescript-tslint 'web-mode)
+                      (flycheck-add-mode 'javascript-tide 'web-mode))))))
+    ))
+
+(add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
