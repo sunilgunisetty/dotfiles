@@ -177,19 +177,6 @@
 ;; ########################################################################
 ;; ########################################################################
 
-(use-package projectile
-  :defer 5
-  :init
-  (setq projectile-switch-project-action #'projectile-dired
-        projectile-completion-system 'ivy)
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :config (projectile-global-mode))
-
-(use-package counsel-projectile
-  :after (counsel projectile)
-  :config
-  (counsel-projectile-mode 1))
-
 (use-package ivy
   :init
   (setq ivy-initial-inputs-alist nil)
@@ -215,12 +202,30 @@
 
 (use-package counsel
   :after swiper
-  :bind
-  (("M-y" . counsel-yank-pop) ;; Better kill ring package
-   :map ivy-minibuffer-map
-   ("M-y" . ivy-next-line))
   :config
-  (counsel-mode))
+  (counsel-mode)
+  :bind
+  (("M-y" . counsel-yank-pop)
+   :map ivy-minibuffer-map
+   ("M-y" . ivy-next-line)))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :demand t
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/dev/git")
+    (setq projectile-project-search-path '("~/dev/git")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :after projectile
+  :config (counsel-projectile-mode)
+  :init
+  (setq counsel-ag-base-commad "ag -zS --nocolor --nogroup %s")
+  (setq counsel-rg-base-command "rg -S -M 200 --no-heading --line-number --color never %s .")
 
 (use-package multiple-cursors
   :init
