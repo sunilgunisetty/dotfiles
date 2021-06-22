@@ -16,9 +16,11 @@
 (setq show-paren-style 'parenthesis)
 (setq show-paren-when-point-inside-paren 1)
 (column-number-mode t)
+(setq inhibit-startup-screen t)
+
+(add-hook 'emacs-startup-hook (lambda () (org-agenda nil "n")))
 
 ;; scrolling
-
 (setq mouse-wheel-scroll-amount '(1)
       mouse-wheel-progressive-speed nil
       scroll-conservatively 101
@@ -97,7 +99,8 @@
 (windmove-default-keybindings)
 
 ;; cursor type
-(setq-default cursor-type 'bar)
+(unless (display-graphic-p)
+  (setq-default cursor-type 'bar))
 
 ;; ############################################################
 ;; ################## DISPLAY ################################
@@ -127,20 +130,26 @@
 
 ;; ########### THEME ####################
 (use-package ample-theme
+  :ensure t
   :init
   (progn
     (load-theme 'ample t t)
     (load-theme 'ample-flat t t)
-    (load-theme 'ample-light t t))
-  :ensure t)
+    (load-theme 'ample-light t t)))
 
-;; (use-package humanoid-themes
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (load-theme 'humanoid-light t t)
-;;     (load-theme 'humanoid-dark t t)
-;;     (enable-theme 'humanoid-dark)))
+(use-package humanoid-themes
+  :ensure t
+  :init
+  (progn
+    (load-theme 'humanoid-light t t)
+    (load-theme 'humanoid-dark t t)))
+
+(use-package modus-themes
+  :ensure t
+  :init
+  (progn
+    (load-theme 'modus-vivendi t t)
+    (load-theme 'modus-operandi t t)))
 
 (use-package spacegray-theme
   :ensure t
@@ -149,14 +158,15 @@
     (load-theme 'spacegray t t)))
 
 (if (display-graphic-p)
-    (enable-theme 'spacegray)
+    (enable-theme 'modus-vivendi)
   (enable-theme 'ample))
 
 ;; ############### MAGIT #################
 (use-package magit
   :init (setq magit-diff-refine-hunk t)
   :commands (magit-status)
-  :bind (("C-c m" . magit-status)))
+  :bind (("C-c m" . magit-status))
+  :custom (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package magit-gitflow
   :hook (magit-mode-hook . turn-on-magit-gitflow))
@@ -225,7 +235,7 @@
   :config (counsel-projectile-mode)
   :init
   (setq counsel-ag-base-commad "ag -zS --nocolor --nogroup %s")
-  (setq counsel-rg-base-command "rg -S -M 200 --no-heading --line-number --color never %s .")
+  (setq counsel-rg-base-command "rg -S -M 200 --no-heading --line-number --color never %s ."))
 
 (use-package multiple-cursors
   :init
@@ -341,11 +351,6 @@
   (cljr-add-keybindings-with-prefix "C-c C-m")
   :diminish clj-refactor-mode)
 
-;; (use-package intero
-;;   :ensure t
-;;   :config
-;;   (add-hook 'haskell-mode-hook 'intero-mode))
-
 (use-package org
   :bind (("C-c a" . org-agenda))
   :config
@@ -442,13 +447,11 @@
   :ensure t
   :config
   (progn
-    (company-mode +1)
     ;; aligns annotation to the right hand side
     (setq company-tooltip-align-annotations t)
     (add-hook 'typescript-mode-hook #'setup-tide-mode)
     (add-hook 'before-save-hook 'tide-format-before-save)
-    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
-  ))
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))))
 
 ;; use web-mode + tide-mode for javascript instead
 (use-package js2-mode
@@ -493,7 +496,6 @@
                     (setup-tide-mode)
                     (with-eval-after-load 'flycheck
                       (flycheck-add-mode 'typescript-tslint 'web-mode)
-                      (flycheck-add-mode 'javascript-tide 'web-mode))))))
-    ))
+                      (flycheck-add-mode 'javascript-tide 'web-mode))))))))
 
 (add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")

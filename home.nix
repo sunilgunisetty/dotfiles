@@ -103,6 +103,7 @@ in
         dante
         humanoid-themes
         spacegray-theme
+        modus-themes
       ]));
   };
 
