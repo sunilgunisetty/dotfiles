@@ -207,7 +207,7 @@
   (ivy-mode 1)
   :config
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-wrap t)
+  ;;(setq ivy-wrap t)
   (setq ivy-count-format "(%d/%d) ")
   (setq enable-recursive-minibuffers t)
 
@@ -463,7 +463,9 @@
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  (setq tide-format-options '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+  (setq tide-format-options
+        '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+  (setq typescript-indent-level 2)
   ;; company is an optional dependency. You have to
   ;; install it separately via package-install
   ;; `M-x package-install [ret] company`
