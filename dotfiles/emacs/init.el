@@ -1,4 +1,3 @@
-;; ######################################
 ;; ######## SANE DEFAULTS ###############
 
 (setq ring-bell-function 'ignore
@@ -87,6 +86,8 @@
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
   (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
 
+(add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
+
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
@@ -102,9 +103,7 @@
 (unless (display-graphic-p)
   (setq-default cursor-type 'bar))
 
-;; ############################################################
 ;; ################## DISPLAY ################################
-
 
 (delete-selection-mode t)
 
@@ -124,9 +123,6 @@
 (use-package highlight-indent-guides
   :init
   (setq highlight-indent-guides-method 'column))
-
-;; ########################################################################
-;; ########################################################################
 
 ;; ########### THEME ####################
 (use-package ample-theme
@@ -184,7 +180,6 @@
 (use-package forge
   :after magit)
 
-;; ########################################################################
 ;; ########################################################################
 
 (use-package ivy
@@ -440,8 +435,6 @@
   (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
   (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 
-(add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
-
 ;; Haskell mode
 (use-package dante
   :ensure t
@@ -470,6 +463,14 @@
   (setq typescript-indent-level 2)
   (local-set-key (kbd "C-c d") 'tide-documentation-at-point)
   (company-mode +1))
+
+(defun mac-font ()
+  (interactive)
+  (set-face-attribute 'default nil :family "Fira Code Retina" :height 120))
+
+(defun lg-font ()
+  (interactive)
+  (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
 
 ;; typescript setup
 (use-package tide
