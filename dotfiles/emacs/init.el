@@ -18,7 +18,7 @@
 (column-number-mode t)
 (setq inhibit-startup-screen t)
 
-(add-hook 'emacs-startup-hook (lambda () (org-agenda nil "n")))
+;;(add-hook 'emacs-startup-hook (lambda () (org-agenda nil "n")))
 
 ;; scrolling
 (setq mouse-wheel-scroll-amount '(1)
@@ -191,7 +191,7 @@
   :diminish
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
-         ("TAB" . ivy-alt-done)
+         ;;("TAB" . ivy-alt-done)
          ("C-f" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
@@ -440,6 +440,8 @@
   (add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode))
   (add-hook 'terraform-mode-hook #'terraform-format-on-save-mode))
 
+(add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
+
 ;; Haskell mode
 (use-package dante
   :ensure t
@@ -527,5 +529,3 @@
                     (with-eval-after-load 'flycheck
                       (flycheck-add-mode 'typescript-tslint 'web-mode)
                       (flycheck-add-mode 'javascript-tide 'web-mode))))))))
-
-(add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
