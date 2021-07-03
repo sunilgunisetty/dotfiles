@@ -107,6 +107,13 @@ in
       ]));
   };
 
+  programs.gpg = {
+    enable = true;
+    settings = {
+      use-agent = true;
+    };
+  };
+
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
@@ -281,6 +288,11 @@ in
         output=json
         cli_auto_prompt = on-partial
         cli_pager=
+      '';
+    };
+    ".gnupg/gpg.conf" = {
+      text = ''
+      keyserver hkp://pgp.mit.edu
       '';
     };
   };
