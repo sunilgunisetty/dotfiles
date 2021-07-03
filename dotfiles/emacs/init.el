@@ -87,6 +87,7 @@
   (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
 
 (add-to-list 'exec-path "/Users/sgunisetty/.nix-profile/bin")
+(setq auth-sources '("~/.authinfo.gpg"))
 
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
