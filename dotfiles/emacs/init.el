@@ -468,9 +468,6 @@
   (setq tide-format-options
         '(:indentSize 2 :tabSize 2 :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
   (setq typescript-indent-level 2)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (local-set-key (kbd "C-c d") 'tide-documentation-at-point)
   (company-mode +1))
 
@@ -497,7 +494,6 @@
     (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
 
-;; use json-mode from https://github.com/joshwnj/json-mode for json instead of js-mode or js2-mode
 (use-package json-mode
   :ensure t
   :config
