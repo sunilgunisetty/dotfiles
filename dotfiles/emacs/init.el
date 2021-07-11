@@ -473,6 +473,17 @@
   (interactive)
   (set-face-attribute 'default nil :family "Fira Code Retina" :height 140))
 
+(defun duplicate-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (next-line 1)
+  (yank))
+
+(global-set-key (kbd "s-d") 'duplicate-line)
+
 ;; typescript setup
 (use-package tide
   :ensure t
